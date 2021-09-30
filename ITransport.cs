@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsPlanes
 {
-    interface ITransport
+    public interface ITransport
     {
         /// Установка позиции
         void SetPosition(int x, int y, int width, int height);

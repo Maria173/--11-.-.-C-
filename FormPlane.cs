@@ -20,12 +20,19 @@ namespace WindowsFormsPlanes
             InitializeComponent();
         }
 
-        // Метод отрисовки самолета
-        private void Draw()
+        /// Передача самолета на форму
+        public void SetPlane(ITransport plane)
+        {
+            this.plane = plane;
+            Draw();
+        }
+
+            // Метод отрисовки самолета
+            private void Draw()
         {
             Bitmap bmp = new Bitmap(pictureBoxPlanes.Width, pictureBoxPlanes.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            plane.DrawTransport(gr);
+            plane?.DrawTransport(gr);
             pictureBoxPlanes.Image = bmp;
         }
 
@@ -33,7 +40,7 @@ namespace WindowsFormsPlanes
 		{
             Random rnd = new Random();
             plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Black);
-            plane.SetPosition(rnd.Next(10, 100), rnd.Next(50, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
+            plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
             Draw();
         }
         private void buttonCreateSeaplane_Click(object sender, EventArgs e)
