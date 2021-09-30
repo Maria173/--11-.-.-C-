@@ -40,7 +40,7 @@ namespace WindowsFormsPlanes
 		{
             Random rnd = new Random();
             plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Black);
-            plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
+            plane.SetPosition(rnd.Next(10, 100), rnd.Next(50, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
             Draw();
         }
         private void buttonCreateSeaplane_Click(object sender, EventArgs e)
