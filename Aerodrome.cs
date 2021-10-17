@@ -10,9 +10,12 @@ namespace WindowsFormsPlanes
 {
     public class Aerodrome<T> where T : class, ITransport
     {
-        
-        /// Массив объектов, которые храним
-        private readonly T[] _places;
+
+        /// Список объектов, которые храним
+        private readonly List<T> _places;
+
+        /// Максимальное количество мест на аэродроме
+        private readonly int _maxCount;
 
         /// Ширина окна отрисовки
         private readonly int pictureWidth;
@@ -20,10 +23,10 @@ namespace WindowsFormsPlanes
         /// Высота окна отрисовки
         private readonly int pictureHeight;
 
-        /// Размер места на аэродроме (ширина)
+        /// Размер места (ширина)
         private readonly int _placeSizeWidth = 230;
 
-        /// Размер места на аэродроме (высота)
+        /// Размер места (высота)
         private readonly int _placeSizeHeight = 100;
 
         private int width;
@@ -34,32 +37,20 @@ namespace WindowsFormsPlanes
         {
             width = picWidth / _placeSizeWidth;
             height = picHeight / _placeSizeHeight;
-            _places = new T[width * height];
+            _maxCount = width * height;
             pictureWidth = picWidth;
             pictureHeight = picHeight;
+            _places = new List<T>();
         }
 
         /// Перегрузка оператора сложения
         /// Логика действия: на аэродром добавляется самолет
         public static int operator +(Aerodrome<T> a, T plane)
         {
-            int i = 0;
-            int j = 0;
-
-            while (i < a.height)
+            if (a._places.Count < a._maxCount)
             {
-                j = 0;
-                while (j < a.width)
-                {
-                    if (a._places[i * a.width + j] == null)
-                    {
-                        plane.SetPosition(j * a._placeSizeWidth,i * a._placeSizeHeight, a.pictureWidth, a.pictureHeight);
-                        a._places[i * a.width + j] = plane;
-                        return (i * a.width + j);
-                    }
-                    j++;
-                }
-                i++;
+                a._places.Add(plane);
+                return 1;
             }
             return -1;
         }
@@ -68,11 +59,11 @@ namespace WindowsFormsPlanes
         /// Логика действия: с аэродрома отгоняется самолет
         public static T operator -(Aerodrome<T> a, int index)
         {
-            if (index >= a._places.Length || index < 0) return null;
+            if (index >= a._places.Count || index < 0) return null;
             if (a._places[index] != null)
             {
                 T res_plane = a._places[index];
-                a._places[index] = null;
+                a._places.RemoveAt(index);
                 return res_plane;
             }
             else return null;
@@ -82,9 +73,11 @@ namespace WindowsFormsPlanes
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i]?.DrawTransport(g);
+                _places[i].SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 *
+                _placeSizeHeight + 5, pictureWidth, pictureHeight);
+                _places[i].DrawTransport(g);
             }
         }
 
@@ -95,8 +88,7 @@ namespace WindowsFormsPlanes
             for (int i = 0; i < pictureWidth / _placeSizeWidth; i++)
             {
                 for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j)
-                {
-                    ///линия рамзетки места
+                { //линия рамзетки места
                     g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i *
                    _placeSizeWidth + _placeSizeWidth / 2, j * _placeSizeHeight);
                 }
