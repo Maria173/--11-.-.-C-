@@ -12,7 +12,7 @@ namespace WindowsFormsPlanes
 {
 	public partial class FormPlane : Form
 	{
-        private Seaplane plane;
+        private ITransport plane;
 
         // Конструктор
         public FormPlane()
@@ -29,13 +29,19 @@ namespace WindowsFormsPlanes
             pictureBoxPlanes.Image = bmp;
         }
 
-        private void buttonCreate_Click(object sender, EventArgs e)
+        private void buttonCreatePlane_Click(object sender, EventArgs e)
 		{
             Random rnd = new Random();
-            plane = new Seaplane();
-            plane.Init(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Black,
-            Color.Blue, true, true); plane.SetPosition(rnd.Next(10, 100),
-            rnd.Next(50, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
+            plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Black);
+            plane.SetPosition(rnd.Next(10, 100), rnd.Next(50, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
+            Draw();
+        }
+        private void buttonCreateSeaplane_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            plane = new Seaplane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Black,
+            Color.Blue, true, true);
+            plane.SetPosition(rnd.Next(10, 100), rnd.Next(50, 100), pictureBoxPlanes.Width, pictureBoxPlanes.Height);
             Draw();
         }
 
@@ -59,9 +65,6 @@ namespace WindowsFormsPlanes
                     break;
             }
             Draw();
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
         }
     }
 }
