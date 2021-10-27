@@ -54,7 +54,7 @@ namespace WindowsFormsPlanes
   
         }
 
-        /// Обработка нажатия кнопки "Добавить парковку"
+        /// Обработка нажатия кнопки "Добавить аэродром"
         private void buttonAddAerodrome_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxNewLevelName.Text))
@@ -67,7 +67,7 @@ namespace WindowsFormsPlanes
             ReloadLevels();
         }
 
-        /// Обработка нажатия кнопки "Удалить парковку"
+        /// Обработка нажатия кнопки "Удалить аэродром"
         private void buttonDelAerodrome_Click(object sender, EventArgs e)
         {
             if (listBoxAerodrome.SelectedIndex > -1)
@@ -99,7 +99,7 @@ namespace WindowsFormsPlanes
                 }
                 else
                 {
-                    MessageBox.Show("Парковка переполнена");
+                    MessageBox.Show("Аэродром переполнен");
                 }
             }
         }

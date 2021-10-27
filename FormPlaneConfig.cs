@@ -13,7 +13,7 @@ namespace WindowsFormsPlanes
     public partial class FormPlaneConfig : Form
     {
 
-        /// Переменная-выбранная машина
+        /// Переменная-выбранный самолет
         Vehicle plane = null;
 
         /// Событие
@@ -144,7 +144,7 @@ namespace WindowsFormsPlanes
             }
         }
 
-        /// Добавление машины
+        /// Добавление самолета
         private void buttonOk_Click(object sender, EventArgs e)
         {
             eventAddPlane?.Invoke(plane);
