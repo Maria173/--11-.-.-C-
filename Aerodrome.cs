@@ -75,9 +75,10 @@ namespace WindowsFormsPlanes
             DrawMarking(g);
             for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i].SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 *
-                _placeSizeHeight + 5, pictureWidth, pictureHeight);
-                _places[i].DrawTransport(g);
+                _places[i]?.SetPosition((i % (pictureWidth / _placeSizeWidth)) * _placeSizeWidth + 5,
+                    (i / (pictureWidth / _placeSizeWidth)) * _placeSizeHeight,
+                    pictureWidth, pictureHeight);
+                _places[i]?.DrawTransport(g);
             }
         }
 

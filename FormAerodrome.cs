@@ -85,52 +85,27 @@ namespace WindowsFormsPlanes
         /// Обработка нажатия кнопки "Поставить самолет"
         private void buttonSetPlane_Click(object sender, EventArgs e)
         {
-            if (listBoxAerodrome.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var plane = new Plane(100, 1000, dialog.Color);
-                    if (aerodromeCollection[listBoxAerodrome.SelectedItem.ToString()] + plane > -1)
-                    {
-                        Draw();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Парковка переполнена");
-                    }
-                }
-            }
+            var formPlaneConfig = new FormPlaneConfig();
+            formPlaneConfig.AddEvent(AddPlane);
+            formPlaneConfig.Show();
         }
 
-        /// Обработка нажатия кнопки "Поставить гидросамолет"
-        private void buttonSetSeaplane_Click(object sender, EventArgs e)
-        {
-            if (listBoxAerodrome.SelectedIndex > -1)
+        private void AddPlane(Vehicle plane) {
+            if (plane != null && listBoxAerodrome.SelectedIndex > -1)
             {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if ((aerodromeCollection[listBoxAerodrome.SelectedItem.ToString()] + plane) > -1)
                 {
-                    ColorDialog dialogDop = new ColorDialog();
-                    if (dialogDop.ShowDialog() == DialogResult.OK)
-                    {
-                        var plane = new Seaplane(100, 1000, dialog.Color,
-                        dialogDop.Color, true, true);
-                        if (aerodromeCollection[listBoxAerodrome.SelectedItem.ToString()] + plane > -1)
-                        {
-                            Draw();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Парковка переполнена");
-                        }
-                    }  
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Парковка переполнена");
                 }
             }
         }
 
         /// Обработка нажатия кнопки "Отогнать"
-        private void buttonTakePlane_Click(object sender, EventArgs e)
+            private void buttonTakePlane_Click(object sender, EventArgs e)
         {
             if (listBoxAerodrome.SelectedIndex > -1 && maskedTextBox.Text != "")
             {

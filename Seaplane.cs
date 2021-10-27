@@ -52,6 +52,12 @@ namespace WindowsFormsPlanes
             }
             base.DrawTransport(g);
         }
+
+        /// Смена дополнительного цвета
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
+        }
     }
 }
 
