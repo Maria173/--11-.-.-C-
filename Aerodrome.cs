@@ -97,5 +97,15 @@ namespace WindowsFormsPlanes
                (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
         }
+
+        /// Функция получения элементы из списка
+        public T GetNext(int index)
+        {
+            if (index < 0 || index >= _places.Count)
+            {
+                return null;
+            }
+            return _places[index];
+        }
     }
 }

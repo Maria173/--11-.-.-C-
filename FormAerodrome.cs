@@ -59,7 +59,7 @@ namespace WindowsFormsPlanes
         {
             if (string.IsNullOrEmpty(textBoxNewLevelName.Text))
             {
-                MessageBox.Show("Введите название парковки", "Ошибка",
+                MessageBox.Show("Введите название аэродрома", "Ошибка",
                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -72,7 +72,7 @@ namespace WindowsFormsPlanes
         {
             if (listBoxAerodrome.SelectedIndex > -1)
             {
-                if (MessageBox.Show($"Удалить парковку{ listBoxAerodrome.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
+                if (MessageBox.Show($"Удалить аэродром{ listBoxAerodrome.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     aerodromeCollection.DelAerodrome(listBoxAerodrome.SelectedItem.ToString());
@@ -127,5 +127,40 @@ namespace WindowsFormsPlanes
             Draw();
         }
 
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (aerodromeCollection.SaveData(saveFileDialog.FileName))
+                {
+                    MessageBox.Show("Сохранение прошло успешно", "Результат",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не сохранилось", "Результат",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (aerodromeCollection.LoadData(openFileDialog.FileName))
+                {
+                    MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                    ReloadLevels();
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
