@@ -78,10 +78,10 @@ namespace WindowsFormsPlanes
         {
             if (listBoxAerodrome.SelectedIndex > -1)
             {
-                if (MessageBox.Show($"Удалить аэродром { listBoxAerodrome.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
+                if (MessageBox.Show($"Удалить аэродром {listBoxAerodrome.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    logger.Info($"Удалили аэродром { listBoxAerodrome.SelectedItem.ToString()}");
+                    logger.Info($"Удалили аэродром {listBoxAerodrome.SelectedItem.ToString()}");
                     aerodromeCollection.DelAerodrome(listBoxAerodrome.SelectedItem.ToString());
                     ReloadLevels();
                 }
@@ -139,7 +139,7 @@ namespace WindowsFormsPlanes
                         FormPlane form = new FormPlane();
                         form.SetPlane(plane);
                         form.ShowDialog();
-                        logger.Info($"Изъят самолет {plane} с места{ maskedTextBox.Text}");
+                        logger.Info($"Изъят самолет {plane} с места {maskedTextBox.Text}");
                     }
                     Draw();
                 }
@@ -159,7 +159,7 @@ namespace WindowsFormsPlanes
         /// Метод обработки выбора элемента на listBoxAerodrome
         private void listBoxAerodrome_SelectedIndexChanged(object sender, EventArgs e)
         {
-            logger.Info($"Перешли на аэродром { listBoxAerodrome.SelectedItem.ToString()}");
+            logger.Info($"Перешли на аэродром {listBoxAerodrome.SelectedItem.ToString()}");
             Draw();
         }
 
