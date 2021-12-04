@@ -47,19 +47,22 @@ namespace WindowsFormsPlanes
         /// Логика действия: на аэродром добавляется самолет
         public static int operator +(Aerodrome<T> a, T plane)
         {
-            if (a._places.Count < a._maxCount)
+            if (a._places.Count >= a._maxCount)
             {
-                a._places.Add(plane);
-                return 1;
+                throw new AerodromeOverflowException();
             }
-            return -1;
+            a._places.Add(plane);
+            return 1;
         }
 
         /// Перегрузка оператора вычитания
         /// Логика действия: с аэродрома отгоняется самолет
         public static T operator -(Aerodrome<T> a, int index)
         {
-            if (index >= a._places.Count || index < 0) return null;
+            if (index >= a._places.Count || index < 0)
+            {
+                throw new AerodromeNotFoundException(index);
+            }
             if (a._places[index] != null)
             {
                 T res_plane = a._places[index];
