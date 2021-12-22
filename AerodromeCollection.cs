@@ -77,22 +77,19 @@ namespace WindowsFormsPlanes
                 {
                     //Начинаем аэродром
                     sw.WriteLine($"Aerodrome{separator}{level.Key}", sw);
-                    ITransport plane = null;
-                    for (int i = 0; (plane = level.Value.GetNext(i)) != null; i++)
+
+                    foreach (ITransport plane in level.Value)
                     {
-                        if (plane != null)
+                        if (plane.GetType().Name == "Plane")
                         {
-                            if (plane.GetType().Name == "Plane")
-                            {
-                                sw.Write($"Plane{separator}", sw);
-                            }
-                            if (plane.GetType().Name == "Seaplane")
-                            {
-                                sw.Write($"Seaplane{separator}", sw);
-                            }
-                            //Записываемые параметры
-                            sw.WriteLine(plane + "", sw);
+                            sw.Write($"Plane{separator}", sw);
                         }
+                        if (plane.GetType().Name == "Seaplane")
+                        {
+                            sw.Write($"Seaplane{separator}", sw);
+                        }
+                        //Записываемые параметры
+                        sw.WriteLine(plane + "", sw);
                     }
                 }
             }
