@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsPlanes
 {
-    public class Seaplane : Plane
+    public class Seaplane : Plane, IEquatable<Seaplane>
     {
         // Дополнительный цвет
         public Color DopColor { private set; get; }
@@ -78,6 +78,43 @@ namespace WindowsFormsPlanes
         {
             return
             $"{base.ToString()}{separator}{DopColor.Name}{separator}{BottomSpoiler}{separator}{ScrewSpoiler}{separator}";
+        }
+
+        public bool Equals(Seaplane other)
+        {
+            if (base.Equals(other))
+            {
+                if (DopColor != other.DopColor)
+                {
+                    return false;
+                }
+                if (BottomSpoiler != other.BottomSpoiler)
+                {
+                    return false;
+                }
+                if (ScrewSpoiler != other.ScrewSpoiler)
+                {
+                    return false;
+                }
+                return true;
+            }
+            else return false;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is Seaplane planeObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(planeObj);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,8 @@ using System.Drawing;
 
 namespace WindowsFormsPlanes
 {
-    public class Aerodrome<T> where T : class, ITransport
+    public class Aerodrome<T> : IEnumerator<T>, IEnumerable<T>
+        where T : class, ITransport
     {
 
         /// Список объектов, которые храним
@@ -28,6 +29,10 @@ namespace WindowsFormsPlanes
 
         /// Размер места (высота)
         private readonly int _placeSizeHeight = 100;
+
+        private int _currentIndex;
+        public T Current => _places[_currentIndex];
+        object IEnumerator.Current => _places[_currentIndex];
 
         private int width;
         private int height;
@@ -50,6 +55,10 @@ namespace WindowsFormsPlanes
             if (a._places.Count >= a._maxCount)
             {
                 throw new AerodromeOverflowException();
+            }
+            if (a._places.Contains(plane))
+            {
+                throw new AerodromeAlreadyHaveException();
             }
             a._places.Add(plane);
             return 1;
@@ -109,6 +118,37 @@ namespace WindowsFormsPlanes
                 return null;
             }
             return _places[index];
+        }
+
+        public void Sort() => _places.Sort((IComparer<T>)new PlaneComparer());
+
+        public void Dispose()
+        {
+        }
+
+        public bool MoveNext()
+        {
+            if (_currentIndex < _places.Count - 1)
+            {
+                _currentIndex++;
+                return true;
+            }
+            return false;
+        }
+
+        public void Reset()
+        {
+            _currentIndex = -1;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
         }
     }
 }
